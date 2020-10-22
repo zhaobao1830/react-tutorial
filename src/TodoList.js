@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import TodoItem from "./todoItem";
 
 class TodoList extends Component {
 
@@ -8,6 +9,9 @@ class TodoList extends Component {
       inputValue: '',
       list: ['学英语', '学语文']
     }
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleBtnClick = this.handleBtnClick.bind(this);
+    this.handleBtnDelete = this.handleBtnDelete.bind(this);
   }
 
   render() {
@@ -18,46 +22,53 @@ class TodoList extends Component {
           <input
             id="insertArea"
             value={this.state.inputValue}
-            onChange={this.handleInputChange.bind(this)}
+            onChange={this.handleInputChange}
           />
-          <button onClick={this.handleBtnClick.bind(this)}>提交</button>
+          <button onClick={this.handleBtnClick}>提交</button>
         </div>
         <ul>
-          {
-           this.state.list.map((item, index) => {
-             return (
-               <li
-                 key={index}
-                 onClick={this.handleBtnDelete.bind(this, index)}
-                 dangerouslySetInnerHTML={{__html: item}}
-               />
-             )
-           })
-          }
+          {this.getTodoItem()}
         </ul>
       </Fragment>
     )
   }
 
-  handleInputChange(e) {
-    this.setState({
-      inputValue: e.target.value
+  getTodoItem() {
+    return this.state.list.map((item, index) => {
+      return (
+        <div
+          key={index}
+        >
+          <TodoItem
+            content={item}
+            index={index}
+            deleteItem={this.handleBtnDelete}
+          />
+        </div>
+      )
     })
   }
 
+  handleInputChange(e) {
+    const value = e.target.value
+    this.setState(() => ({
+      inputValue: value
+    }))
+  }
+
   handleBtnClick(e) {
-    this.setState({
-      list: [...this.state.list, this.state.inputValue],
+    this.setState((prevState) => ({
+      list: [...prevState.list, prevState.inputValue],
       inputValue: ''
-    })
+    }))
   }
 
   handleBtnDelete(index) {
     console.log(index)
-    const list = [...this.state.list]
-    list.splice(index, 1)
-    this.setState({
-      list
+    this.setState((prevState) => {
+      const list = [...prevState.list]
+      list.splice(index, 1)
+      return {list}
     })
   }
 }
