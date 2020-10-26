@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import TodoItem from "./todoItem";
+import TodoItem from "./TodoItem";
 
 class TodoList extends Component {
 
@@ -7,9 +7,11 @@ class TodoList extends Component {
     super(props);
     this.state = {
       inputValue: '',
+      inputValue1: '',
       list: ['学英语', '学语文']
     }
     this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleInputChanges = this.handleInputChanges.bind(this);
     this.handleBtnClick = this.handleBtnClick.bind(this);
     this.handleBtnDelete = this.handleBtnDelete.bind(this);
   }
@@ -18,11 +20,17 @@ class TodoList extends Component {
     return (
       <Fragment>
         <div>
-          <label htmlFor="insertArea">输入内容</label>
           <input
-            id="insertArea"
+            className='pp'
             value={this.state.inputValue}
             onChange={this.handleInputChange}
+            ref={(insertArea) => {this.insertArea1 = insertArea}}
+          />
+          <input
+            className='pptt'
+            value={this.state.inputValue}
+            onChange={this.handleInputChanges}
+            ref={(insertArea) => {this.insertArea = insertArea}}
           />
           <button onClick={this.handleBtnClick}>提交</button>
         </div>
@@ -50,10 +58,23 @@ class TodoList extends Component {
   }
 
   handleInputChange(e) {
+    console.log(this.insertArea1)
     const value = e.target.value
     this.setState(() => ({
       inputValue: value
     }))
+  }
+
+  // handleInputChanges(e) {
+  //   console.log(this.insertArea)
+  //   const value = e.target.value
+  //   this.setState(() => ({
+  //     inputValue: value
+  //   }))
+  // }
+
+  handleInputChanges = (e) => {
+    console.log(this.insertArea)
   }
 
   handleBtnClick(e) {
