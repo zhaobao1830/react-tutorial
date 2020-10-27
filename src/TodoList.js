@@ -8,15 +8,20 @@ class TodoList extends Component {
     this.state = {
       inputValue: '',
       inputValue1: '',
-      list: ['学英语', '学语文']
+      list: []
     }
     this.handleInputChange = this.handleInputChange.bind(this);
-    // this.handleInputChanges = this.handleInputChanges.bind(this);
     this.handleBtnClick = this.handleBtnClick.bind(this);
     this.handleBtnDelete = this.handleBtnDelete.bind(this);
   }
 
+  // 组件即将被挂载到页面的时候执行(只会执行一次)
+  componentWillMount() {
+    console.log('componentWillMount')
+  }
+
   render() {
+    console.log('parent render')
     return (
       <Fragment>
         <div>
@@ -26,12 +31,12 @@ class TodoList extends Component {
             onChange={this.handleInputChange}
             ref={(insertArea) => {this.insertArea1 = insertArea}}
           />
-          <input
-            className='pptt'
-            value={this.state.inputValue}
-            onChange={this.handleInputChanges}
-            ref={(insertArea) => {this.insertArea = insertArea}}
-          />
+          {/*<input*/}
+          {/*  className='pptt'*/}
+          {/*  value={this.state.inputValue}*/}
+          {/*  onChange={this.handleInputChanges}*/}
+          {/*  ref={(insertArea) => {this.insertArea = insertArea}}*/}
+          {/*/>*/}
           <button onClick={this.handleBtnClick}>提交</button>
         </div>
         <ul>
@@ -39,6 +44,29 @@ class TodoList extends Component {
         </ul>
       </Fragment>
     )
+  }
+
+  // 组件被挂载到页面后自动执行(只会执行一次)
+  componentDidMount() {
+    console.log('componentDidMount')
+  }
+
+  // 组件被更新之前，它会自动执行
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    console.log('shouldComponentUpdate')
+    return true;
+  }
+
+  // 组件被更新之前，它会自动执行，在shouldComponentUpdate只会执行；
+  // 如果shouldComponentUpdate返回true，才会执行；
+  // 如果shouldComponentUpdate返回false，不会执行；
+  componentWillUpdate(nextProps, nextState, nextContext) {
+    console.log('componentWillUpdate')
+  }
+
+  // 组件更新以后执行
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('componentDidUpdate')
   }
 
   getTodoItem() {
@@ -58,24 +86,15 @@ class TodoList extends Component {
   }
 
   handleInputChange(e) {
-    console.log(this.insertArea1)
     const value = e.target.value
     this.setState(() => ({
       inputValue: value
     }))
   }
 
-  // handleInputChanges(e) {
+  // handleInputChanges = (e) => {
   //   console.log(this.insertArea)
-  //   const value = e.target.value
-  //   this.setState(() => ({
-  //     inputValue: value
-  //   }))
   // }
-
-  handleInputChanges = (e) => {
-    console.log(this.insertArea)
-  }
 
   handleBtnClick(e) {
     this.setState((prevState) => ({
