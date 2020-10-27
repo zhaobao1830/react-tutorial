@@ -1,115 +1,49 @@
-import React, { Component, Fragment } from 'react';
-import TodoItem from "./TodoItem";
+import React, { Component } from "react";
+import 'antd/dist/antd.css'
+import { Input, Button, List } from 'antd';
+
+const data = [
+  'Racing car sprays burning fuel into crowd.',
+  'Japanese princess to wed commoner.',
+  'Australian walks 100km after outback crash.',
+  'Man charged over missing wedding girl.',
+  'Los Angeles battles huge wildfires.',
+];
 
 class TodoList extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputValue: '',
-      inputValue1: '',
-      list: []
-    }
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleBtnClick = this.handleBtnClick.bind(this);
-    this.handleBtnDelete = this.handleBtnDelete.bind(this);
-  }
-
-  // 组件即将被挂载到页面的时候执行(只会执行一次)
-  componentWillMount() {
-    console.log('componentWillMount')
-  }
-
   render() {
-    console.log('parent render')
     return (
-      <Fragment>
+      <div
+        style={{
+          marginTop: '10px',
+          marginLeft: '10px'
+        }}>
         <div>
-          <input
-            className='pp'
-            value={this.state.inputValue}
-            onChange={this.handleInputChange}
-            ref={(insertArea) => {this.insertArea1 = insertArea}}
-          />
-          {/*<input*/}
-          {/*  className='pptt'*/}
-          {/*  value={this.state.inputValue}*/}
-          {/*  onChange={this.handleInputChanges}*/}
-          {/*  ref={(insertArea) => {this.insertArea = insertArea}}*/}
-          {/*/>*/}
-          <button onClick={this.handleBtnClick}>提交</button>
+          <Input placeholder='todoList'
+                 style={{
+                   width: '300px',
+                   margin: '0 30px'
+                 }}/>
+          <Button type='primary'>primary</Button>
         </div>
-        <ul>
-          {this.getTodoItem()}
-        </ul>
-      </Fragment>
+        <List
+          style={{
+            marginTop: '10px',
+            width: '300px',
+            marginLeft: '30px'
+          }}
+          header={<div>Header</div>}
+          footer={<div>Footer</div>}
+          bordered
+          dataSource={data}
+          renderItem={item => (
+            <List.Item>
+              {item}
+            </List.Item>
+          )}
+        />
+      </div>
     )
-  }
-
-  // 组件被挂载到页面后自动执行(只会执行一次)
-  componentDidMount() {
-    console.log('componentDidMount')
-  }
-
-  // 组件被更新之前，它会自动执行
-  shouldComponentUpdate(nextProps, nextState, nextContext) {
-    console.log('shouldComponentUpdate')
-    return true;
-  }
-
-  // 组件被更新之前，它会自动执行，在shouldComponentUpdate只会执行；
-  // 如果shouldComponentUpdate返回true，才会执行；
-  // 如果shouldComponentUpdate返回false，不会执行；
-  componentWillUpdate(nextProps, nextState, nextContext) {
-    console.log('componentWillUpdate')
-  }
-
-  // 组件更新以后执行
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log('componentDidUpdate')
-  }
-
-  getTodoItem() {
-    return this.state.list.map((item, index) => {
-      return (
-        <div
-          key={index}
-        >
-          <TodoItem
-            content={item}
-            index={index}
-            deleteItem={this.handleBtnDelete}
-          />
-        </div>
-      )
-    })
-  }
-
-  handleInputChange(e) {
-    const value = e.target.value
-    this.setState(() => ({
-      inputValue: value
-    }))
-  }
-
-  // handleInputChanges = (e) => {
-  //   console.log(this.insertArea)
-  // }
-
-  handleBtnClick(e) {
-    this.setState((prevState) => ({
-      list: [...prevState.list, prevState.inputValue],
-      inputValue: ''
-    }))
-  }
-
-  handleBtnDelete(index) {
-    console.log(index)
-    this.setState((prevState) => {
-      const list = [...prevState.list]
-      list.splice(index, 1)
-      return {list}
-    })
   }
 }
 
