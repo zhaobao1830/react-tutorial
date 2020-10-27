@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 import 'antd/dist/antd.css'
 import { Input, Button, List } from 'antd';
-
-const data = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
-];
+import store from "./store";
 
 class TodoList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = store.getState()
+    // this.handleStoreChange = this.handleStoreChange.bind(this)
+    store.subscribe(this.handleStoreChange)
+  }
   render() {
     return (
       <div
@@ -19,12 +18,19 @@ class TodoList extends Component {
           marginLeft: '10px'
         }}>
         <div>
-          <Input placeholder='todoList'
-                 style={{
-                   width: '300px',
-                   margin: '0 30px'
-                 }}/>
-          <Button type='primary'>primary</Button>
+          <Input
+            placeholder='todoList'
+            value={this.state.inputValue}
+            style={{
+              width: '300px',
+              margin: '0 30px'
+            }}
+            onChange={this.handleInputChange}
+          />
+          <Button
+            type='primary'
+            onClick={this.handleBtnClick}
+          >primary</Button>
         </div>
         <List
           style={{
@@ -32,18 +38,43 @@ class TodoList extends Component {
             width: '300px',
             marginLeft: '30px'
           }}
-          header={<div>Header</div>}
-          footer={<div>Footer</div>}
           bordered
-          dataSource={data}
-          renderItem={item => (
-            <List.Item>
+          dataSource={this.state.list}
+          renderItem={(item, index) => (
+            <List.Item
+              onClick={this.handleDeleteClick(index)}
+            >
               {item}
             </List.Item>
           )}
         />
       </div>
     )
+  }
+
+  handleInputChange = (e) => {
+    const action = {
+      type: 'change_input_value',
+      value: e.target.value
+    }
+
+    store.dispatch(action)
+  }
+
+  handleStoreChange = () => {
+    this.setState(store.getState())
+  }
+
+  handleBtnClick = () => {
+    const action = {
+      type: 'add_toto_item'
+    }
+
+    store.dispatch(action)
+  }
+
+  handleDeleteClick = (index) => {
+    console.log(index)
   }
 }
 
