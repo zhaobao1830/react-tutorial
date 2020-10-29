@@ -8,7 +8,6 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = store.getState()
-    this.handleDeleteClick=this.handleDeleteClick.bind(this)
     store.subscribe(this.handleStoreChange)
   }
   render() {
