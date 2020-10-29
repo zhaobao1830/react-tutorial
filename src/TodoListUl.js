@@ -23,7 +23,7 @@ const TodoListUl = (props) => {
         <Button
           type='primary'
           onClick={props.handleBtnClick}
-        >primary</Button>
+        >提交</Button>
       </div>
       <List
         style={{
