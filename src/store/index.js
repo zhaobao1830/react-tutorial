@@ -11,7 +11,7 @@ const composeEnhancers =
 
 // thunk是redux的中间件
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk),
+  applyMiddleware(thunk)
   // other store enhancers if any
 );
 
