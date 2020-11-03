@@ -1,5 +1,9 @@
-import { createStore, compose  } from "redux";
+import { createStore, compose, applyMiddleware } from "redux";
 import reducer from "./reducer";
+import createSagaMiddleware from 'redux-saga'
+import TodoSagas from './sagas'
+// create the saga middleware
+const sagaMiddleware = createSagaMiddleware()
 
 const composeEnhancers =
   typeof window === 'object' &&
@@ -9,8 +13,10 @@ const composeEnhancers =
     }) : compose;
 
 // thunk是redux的中间件
-const enhancer = composeEnhancers();
+const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
 
 const store = createStore(reducer, enhancer)
+
+sagaMiddleware.run(TodoSagas);
 
 export default store
