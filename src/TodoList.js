@@ -13,12 +13,7 @@ class TodoList extends Component {
 
   componentDidMount() {
     const action = getInitList()
-    console.log(action)
-    // axios.get('/list.json').then((res) => {
-    //   const data = res.data;
-    //   const action = initListAction(data);
-    //   store.dispatch(action);
-    // })
+    store.dispatch(action)
   }
 
   render() {
