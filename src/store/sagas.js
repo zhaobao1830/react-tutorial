@@ -14,6 +14,7 @@ function* getInitList() {
 }
 
 // generator函数
+// redux-saga监控到type为GET_INIT_LIST的action时，执行getInitList方法
 function* mySaga() {
   yield takeEvery(GET_INIT_LIST, getInitList);
 }
