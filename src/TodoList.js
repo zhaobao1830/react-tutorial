@@ -11,6 +11,7 @@ class TodoList extends Component {
     store.subscribe(this.handleStoreChange)
   }
 
+  // 挂载完成，类似vue的mounted
   componentDidMount() {
     const action = getTododList()
     store.dispatch(action)
