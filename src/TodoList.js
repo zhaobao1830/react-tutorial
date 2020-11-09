@@ -7,10 +7,17 @@ class TodoList extends Component {
       <div>
         <div>
           <input value={this.props.inputValue} onChange={this.props.changeInputValue}/>
-          <button>提交</button>
+          <button onClick={this.props.handleClick}>提交</button>
         </div>
         <ul>
-          <li>测试1</li>
+          {
+            this.props.list.map((item, index) => {
+              return (
+                <li onClick={this.props.handleDelete} key={index}>{item}</li>
+                )
+              }
+            )
+          }
         </ul>
       </div>
     )
@@ -20,7 +27,8 @@ class TodoList extends Component {
 // 负责将通过state获得的数据映射到展示组件的this.props
 const mapStateToProps = (state) => {
   return {
-    inputValue: state.inputValue
+    inputValue: state.inputValue,
+    list: state.list
   }
 }
 
@@ -32,8 +40,17 @@ const mapDispatchToProps = (dispatch) => {
       const action = {
         type: 'change_input_value',
         value: e.target.value
-      }
+      };
       dispatch(action);
+    },
+    handleClick() {
+      const action = {
+        type: 'add_item'
+      };
+      dispatch(action)
+    },
+    handleDelete(index) {
+      console.log(index)
     }
   }
 }
