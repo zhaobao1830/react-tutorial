@@ -1,27 +1,27 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
+import { CHANGE_INPUT_VALUE, ADD_ITEM, DELETE_ITEM } from './store/actionTypes'
 
-class TodoList extends Component {
-  render() {
-    return (
+const TodoList = (props) => {
+  const { inputValue, changeInputValue, handleClick, list, handleDelete } = props;
+  return (
+    <div>
       <div>
-        <div>
-          <input value={this.props.inputValue} onChange={this.props.changeInputValue}/>
-          <button onClick={this.props.handleClick}>提交</button>
-        </div>
-        <ul>
-          {
-            this.props.list.map((item, index) => {
-              return (
-                <li onClick={this.props.handleDelete} key={index}>{item}</li>
-                )
-              }
-            )
-          }
-        </ul>
+        <input value={inputValue} onChange={changeInputValue}/>
+        <button onClick={handleClick}>提交</button>
       </div>
-    )
-  }
+      <ul>
+        {
+          list.map((item, index) => {
+              return (
+                <li onClick={() => {handleDelete(index)}} key={index}>{item}</li>
+              )
+            }
+          )
+        }
+      </ul>
+    </div>
+  )
 }
 
 // 负责将通过state获得的数据映射到展示组件的this.props
@@ -38,19 +38,24 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeInputValue(e) {
       const action = {
-        type: 'change_input_value',
+        type: CHANGE_INPUT_VALUE,
         value: e.target.value
       };
       dispatch(action);
     },
     handleClick() {
       const action = {
-        type: 'add_item'
+        type: ADD_ITEM
       };
       dispatch(action)
     },
     handleDelete(index) {
       console.log(index)
+      const action = {
+        type: DELETE_ITEM,
+        index: index
+      }
+      dispatch(action)
     }
   }
 }
