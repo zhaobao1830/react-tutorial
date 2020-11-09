@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { CHANGE_INPUT_VALUE, ADD_ITEM, DELETE_ITEM } from './store/actionTypes'
 
+// UI组件
 const TodoList = (props) => {
   const { inputValue, changeInputValue, handleClick, list, handleDelete } = props;
   return (
@@ -50,7 +51,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(action)
     },
     handleDelete(index) {
-      console.log(index)
       const action = {
         type: DELETE_ITEM,
         index: index
@@ -60,5 +60,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-// connect的意思就是连接展示组件与容器组件
+// connect的意思就是将UI组件和store里的数据绑定
+// 返回一个容器组件
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
